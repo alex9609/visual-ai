@@ -49,15 +49,20 @@ class _EstadoCamara extends State<Camara> {
     try {
       final XFile pictureFile = await _controller.takePicture();
       final directory = await getApplicationDocumentsDirectory();
-      print('imprimiendo directorio: ${directory}');
       final newPath = directory.path + '/ImagenesVIA';
       final carpeta = await Directory(newPath).create(recursive: true);
-      final file = File('$carpeta/${DateTime.now().millisecondsSinceEpoch}.jpg');
-      await file.writeAsBytes(await pictureFile.readAsBytes());
-      print('Imagen capturada: ${pictureFile.path}');
-      print(file.absolute.path);
+      
+      // validar existencia de carpeta
+
+      if (carpeta.existsSync()){
+        final file = File('${carpeta.path}/${DateTime.now().millisecondsSinceEpoch}.jpg');
+        await file.writeAsBytes(await pictureFile.readAsBytes());
+        print("Existe tamaño: ${ await file.lengthSync()}");
+      }else{
+        print("No se ha creado carpeta");
+      }
     } catch (e) {
-      print('Error no es posible capturar la imagen: $e');
+      print('Error : $e');
     }
   }
 
