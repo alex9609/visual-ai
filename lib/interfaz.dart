@@ -10,25 +10,41 @@ class Interfaz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(247, 162, 23, 1),
+      backgroundColor: Color.fromRGBO(162, 118, 255, 1),
+
       appBar: AppBar(
-        title: const Text('Visual IA'),
-        titleTextStyle: const TextStyle(color: Colors.white,fontSize: 32),
-        backgroundColor: Colors.orange,
-      ),
-      body: Column(
-        children: [
-          
-          Expanded(
-            child: CameraPreview(cameraController),
+        title: const Text('Visual AI'),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(162, 118, 255, 1),
+        titleTextStyle: const TextStyle(
+          fontFamily: 'RobotoMono',
+          color: Colors.white,
+          fontSize: 32,
+          fontWeight: FontWeight.w900,
           ),
-        
-        ],
+
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: takePicture,
-        child: Icon(Icons.camera),
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          return Column(
+            children: [
+              
+              Expanded(
+                child: Center(
+                  child: CameraPreview(cameraController),
+                ),
+              ),
+              FloatingActionButton(
+                backgroundColor: Colors.red,
+                onPressed: takePicture,
+                child: Icon(Icons.camera),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
+
+
