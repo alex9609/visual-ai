@@ -1,16 +1,20 @@
+import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:visual_ia/interfaz.dart'; 
 import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:visual_ia/interfaz.dart';
+import 'package:visual_ia/gemini.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
-late List<CameraDescription> _cameraDisponible;
+late List<CameraDescription> _cameras;
 
-Future<void> main() async {
-  // Inicializar la camara
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _cameraDisponible = await availableCameras();
-
+  await Permission.camera.request();
+  await Permission.manageExternalStorage.request();
+  _cameras = await availableCameras();
+  Gemini.init(apiKey: 'mi api');
   runApp(const Camara());
 }
 
@@ -22,14 +26,13 @@ class Camara extends StatefulWidget {
 }
 
 class _EstadoCamara extends State<Camara> {
-  // controlador de la camara
   late CameraController _controller;
+  String _descripcion = '';
 
   @override
   void initState() {
     super.initState();
-    // Inicializar la camara
-    _controller = CameraController(_cameraDisponible[0], ResolutionPreset.medium);
+    _controller = CameraController(_cameras[0], ResolutionPreset.medium);
     _controller.initialize().then((_) {
       if (!mounted) return;
       setState(() {});
@@ -48,28 +51,45 @@ class _EstadoCamara extends State<Camara> {
     }
     try {
       final XFile pictureFile = await _controller.takePicture();
-      final directory = await getApplicationDocumentsDirectory();
-      final newPath = directory.path + '/ImagenesVIA';
-      final carpeta = await Directory(newPath).create(recursive: true);
-      
-      // validar existencia de carpeta
+      final guardarImagen = await guardarImagenGaleria(pictureFile);
 
-      if (carpeta.existsSync()){
-        final file = File('${carpeta.path}/${DateTime.now().millisecondsSinceEpoch}.jpg');
-        await file.writeAsBytes(await pictureFile.readAsBytes());
-        print("Existe tamaño: ${ await file.lengthSync()}");
-      }else{
-        print("No se ha creado carpeta");
+      if (guardarImagen != null) {
+        final descripcion = await obtenerDescripcionGemini(guardarImagen.path);
+        setState(() {
+          _descripcion = descripcion;
+        });
       }
     } catch (e) {
-      print('Error : $e');
+      print('Error: $e');
+    }
+  }
+
+  Future<File?> guardarImagenGaleria(XFile imageFile) async {
+    // Verificar permiso de almacenamiento
+    final status = await Permission.manageExternalStorage.request();//Permission.storage.request();
+    if (status.isGranted) {
+      final directory = await getApplicationDocumentsDirectory();
+      final newPath = directory.path + '/ImagenesVIA';
+      final carpeta = Directory(newPath);
+      await carpeta.create(recursive: true); // Crear directorio si no existe
+
+      final file = File('${carpeta.path}/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      await file.writeAsBytes(await imageFile.readAsBytes());
+      return file; // Retornar el archivo guardado para posibles acciones
+    } else {
+      print('Permiso de almacenamiento denegado');
+      return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Interfaz(takePicture: _tomarImagen, cameraController: _controller), 
+      home: Interfaz(
+        takePicture: _tomarImagen,
+        cameraController: _controller,
+        descripcion: _descripcion,
+      ),
     );
   }
 }
