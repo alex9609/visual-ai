@@ -97,22 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4+1"
-  dio:
-    dependency: transitive
+  external_path:
+    dependency: "direct main"
     description:
-      name: dio
-      sha256: e17f6b3097b8c51b72c74c9f071a605c47bcc8893839bd66732457a5ebe73714
+      name: external_path
+      sha256: "2095c626fbbefe70d5a4afc9b1137172a68ee2c276e51c3c1283394485bea8f4"
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.0+1"
-  dio_web_adapter:
-    dependency: transitive
-    description:
-      name: dio_web_adapter
-      sha256: "36c5b2d79eb17cdae41e974b7a8284fec631651d2a6f39a8a2ff22327e90aeac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
+    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -166,14 +158,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_gemini:
-    dependency: "direct main"
-    description:
-      name: flutter_gemini
-      sha256: c6079dc6f95c6191e609e9cc627c268ef0bf2526cbba6a2f61aa41ea0053e9a0
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.4"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -200,22 +184,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.4"
-  google_gemini:
-    dependency: "direct main"
-    description:
-      name: google_gemini
-      sha256: a99e14ba2d497ec8e2b4c83e483204709a4ce3ec6c0a6021b3c4a9b2cd671150
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   google_generative_ai:
     dependency: "direct main"
     description:
@@ -304,14 +272,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:

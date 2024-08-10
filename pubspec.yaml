@@ -15,9 +15,8 @@ dependencies:
   permission_handler: ^11.3.1
   http: ^1.2.2
   convert: ^3.1.1
-  flutter_gemini: ^2.0.4
+  external_path: ^1.0.3
   google_generative_ai: ^0.4.4
-  google_gemini: ^0.1.2
   
 dev_dependencies:
   flutter_test:
