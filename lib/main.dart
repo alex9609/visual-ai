@@ -48,8 +48,8 @@ class _EstadoCamara extends State<Camara> {
 Future _reproducirVoz(String text) async {
   try {
     await flutterTts.setLanguage("es-ES");
-    await flutterTts.setSpeechRate(1.0);
-    await flutterTts.setVolume(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setVolume(2.0);
     await flutterTts.speak(text);
   } catch (e) {
     print('Error reproducir voz: $e');
@@ -70,6 +70,7 @@ Future _reproducirVoz(String text) async {
         });
         _reproducirVoz(_descripcion);
       }
+      
     } catch (e) {
       print('Error: $e');
     }

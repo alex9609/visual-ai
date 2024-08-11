@@ -42,13 +42,13 @@ class Interfaz extends StatelessWidget {
                 onPressed: takePicture,
                 child: const Icon(Icons.camera),
               ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  descripcion,
-                  style: const TextStyle(fontSize: 18),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: Text(
+              //     descripcion,
+              //     style: const TextStyle(fontSize: 18),
+              //   ),
+              // ),
             ],
           );
         },
