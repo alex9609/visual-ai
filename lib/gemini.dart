@@ -1,8 +1,5 @@
-//import 'dart:convert';
 import 'dart:io';
 import 'package:google_generative_ai/google_generative_ai.dart';
-//import 'package:google_gemini/google_gemini.dart';
-
 
 Future<String> obtenerDescripcionGemini(String imagePath) async {
   try {
