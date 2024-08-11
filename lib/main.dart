@@ -5,6 +5,7 @@ import 'package:external_path/external_path.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:visual_ia/interfaz.dart';
 import 'package:visual_ia/gemini.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 late List<CameraDescription> _cameras;
 
@@ -25,6 +26,7 @@ class Camara extends StatefulWidget {
 
 class _EstadoCamara extends State<Camara> {
   late CameraController _controller;
+  final FlutterTts flutterTts = FlutterTts();
   String _descripcion = '';
 
   @override
@@ -43,6 +45,16 @@ class _EstadoCamara extends State<Camara> {
     super.dispose();
   }
 
+Future _reproducirVoz(String text) async {
+  try {
+    await flutterTts.setLanguage("es-ES");
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setVolume(2.0);
+    await flutterTts.speak(text);
+  } catch (e) {
+    print('Error reproducir voz: $e');
+  }
+}
   Future<void> _tomarImagen() async {
     if (!_controller.value.isInitialized) {
       return;
@@ -56,13 +68,16 @@ class _EstadoCamara extends State<Camara> {
         setState(() {
           _descripcion = descripcion;
         });
+        _reproducirVoz(_descripcion);
       }
+      
     } catch (e) {
       print('Error: $e');
     }
   }
 
   Future<File?> guardarImagenGaleria(XFile imageFile) async {
+
       final downlaodPath = await ExternalPath.getExternalStoragePublicDirectory(
       ExternalPath.DIRECTORY_DOWNLOADS);
       final fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
