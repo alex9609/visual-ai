@@ -22,4 +22,7 @@ Visual IA es una aplicación desarrollada con Flutter, aprovechando las virtudes
 - Flutter for windows: 3.24.0-stable
 - Android SDK Platform, API 35.0.1
 
+# Funcionamiento 
+https://youtu.be/5PkS8jbcx0A?feature=shared
+
   
